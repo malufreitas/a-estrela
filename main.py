@@ -6,6 +6,15 @@
 # c = Distancia de Manhattan até o destino
 # d = coordenadas do ponto pai
 
+mapa = []
+inicio = (0, 0)      # Inicio definido pelo professor
+final = (9, 8)       # Final definido pelo professor
+
+listaAberta = []    # Lista de posições com as coordenadas que não tiveram seus vizinhos verificados
+listaFechada = []   # Lista de posições com as coordenadas que tiveram seus vizinhos verificados
+
+dicPosicoesCalculadas = {}    # Lista de posições que tiveram seus pesos calculados [((coordenada),1,17,(posOrigem)),...]
+
 def encontra_vizinhos(atual):
     '''
         # Vizinhos (linha , coluna)
@@ -14,23 +23,63 @@ def encontra_vizinhos(atual):
         (atual[0]) , (atual[1]-1)   # Esquerda
         (atual[0]) , (atual[1]+1)   # Direita
     '''
+    global mapa
+    global listaFechada
+    
     vizinhos = [] # Lista de vizinhos
     linha_matriz = atual[0] # Indice da Linha na Matriz
     coluna_matriz = atual[1] # Indice da Coluna na Matriz
 
-    if((linha_matriz-1) >= 0): # Checando a existencia da linha de cima
+    # Checando a existencia de cada vizinho , se a célula não é barreira , se o vizinho não está na Lista Fechada 
+    if( ((linha_matriz-1) >= 0) and (mapa[linha_matriz-1][coluna_matriz] != 1) ):  # Em cima
         vizinho_cima = (linha_matriz-1,coluna_matriz)
-        #Checar se não está na Lista Fechada
-        #Checar se não é barreira
-        vizinhos.append(vizinho_cima)
+        if ( (vizinho_cima not in listaFechada) ):
+            vizinhos.append(vizinho_cima)
     
+    if( ((linha_matriz+1) <= len(mapa)-1) and (mapa[linha_matriz+1][coluna_matriz] != 1) ):   # Em baixo
+        vizinho_baixo = (linha_matriz+1,coluna_matriz)
+        if ( (vizinho_baixo not in listaFechada) ):
+            vizinhos.append(vizinho_baixo)
+
+    if( ((coluna_matriz-1) >= 0) and (mapa[linha_matriz][coluna_matriz-1] != 1) ):  # Esquerda
+        vizinho_esquerda = (linha_matriz,coluna_matriz-1)
+        if ( (vizinho_esquerda not in listaFechada)):
+            vizinhos.append(vizinho_esquerda)
+
+    if( ((coluna_matriz+1) <= len(mapa[0])-1) and (mapa[linha_matriz][coluna_matriz+1] != 1) ):  # Direita
+        vizinho_direita = (linha_matriz,coluna_matriz+1)
+        if ( (vizinho_direita not in listaFechada)):
+            vizinhos.append(vizinho_direita)
+
     return vizinhos
 
 def ordena_pelo_custo():
-    sorted(listaAberta, key=lambda t: (t[1]+t[2]))
+    global listaAberta
 
-def calcula_custos(vizinho):
-    pass
+    listaAberta_aux = []
+
+    for chave in listaAberta:
+        listaAberta_aux.append(dicPosicoesCalculadas[chave])
+
+    sorted(listaAberta_aux , key=lambda t: (t[1]+t[2]))
+
+    listaAberta = []
+
+    for elemento in listaAberta_aux:
+        listaAberta.append(elemento[0])
+
+
+def calcula_custos(pai, vizinhos):
+    global dicPosicoesCalculadas
+
+    for pos_vizinho in range(len(vizinhos)):
+        heuristica = distanciaManhattan(vizinhos[pos_vizinho], final)
+        custo = distanciaManhattan(vizinhos[pos_vizinho], inicio)
+
+        dicPosicoesCalculadas[vizinhos[pos_vizinho]] = (vizinhos[pos_vizinho], heuristica, custo, pai)
+
+    return dicPosicoesCalculadas
+
 
 def criaMapa():
     matriz = []
@@ -48,9 +97,10 @@ def criaMapa():
 
 # Heuristica escolhida, distância em linha reta. h(x)
 def distanciaManhattan(atual, final):
-    return (final[0] - atual[0]) + (final[1] - atual[1])
+    return abs((final[0] - atual[0])) + abs((final[1] - atual[1]))
 
 def buscar():
+    global listaAberta
     listaAberta.append(inicio)
 
     while listaAberta != []:
@@ -59,16 +109,17 @@ def buscar():
         
         # Pesquisa pelos elementos vizinhos elegiveis (nao é barreira) e not in ListaFechada
         vizinhos = encontra_vizinhos(atual)
+        print(vizinhos)
         
         listaAberta.extend(vizinhos)  # Adição desses elementos à lista
-        calcula_custos(vizinhos)  # Calculo de custo de cada vizinho
+        calcula_custos(atual, vizinhos)  # Calculo de custo de cada vizinho
         
         # Remocao do primeiro elemento da lista aberta
         listaAberta.remove(atual)
         
         # Adicionando o elemento processado na lista fechada
-        listaFechada.append(atual)
-        
+        listaFechada.append(atual)  
+
         # Ordenação dos elementos em ordem de custo crescente
         ordena_pelo_custo() 
     
@@ -76,24 +127,16 @@ def buscar():
 
 # Algoritmo A* : f(x) = g(x) + h(x)
 def main():
+    global mapa
+    mapa = criaMapa()       # Cria matriz com o mapa passado em txt
+
     for i in mapa:
         print(i)
 
-    # buscar()
+    buscar()
     return 0
 
 if __name__ == "__main__":
-
-    mapa = criaMapa()       # Cria matriz com o mapa passado em txt
-
-    inicio = (0, 0)      # Inicio definido pelo professor
-    final = (9, 8)       # Final definido pelo professor
-
-    custo = 1            # g(x)
-    listaAberta = []    # Lista de posições com as coordenadas que não tiveram seus vizinhos verificados
-    listaFechada = []   # Lista de posições com as coordenadas que tiveram seus vizinhos verificados
-
-    # Lista de posições que tiveram seus pesos calculados [((coordenada),1,17,(posOrigem)),...]
-    listaPosicoesCalculadas = []
-
     main()
+
+    
