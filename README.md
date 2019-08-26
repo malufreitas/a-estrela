@@ -1,7 +1,7 @@
 # Algoritmo A* (A estrela)
 
 Trabalho para a Disciplina de Inteligência Artificial
-Alunos: Maria Luiza e [Tarcísio Bruni](https://github.com/tarcisiobruni)
+Alunos: [Maria Luiza](https://github.com/malufreitas) e [Tarcísio Bruni](https://github.com/tarcisiobruni)
 
 ## Explicação Teórica
 
