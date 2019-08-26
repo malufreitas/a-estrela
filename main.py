@@ -164,7 +164,8 @@ def buscar():
 def main():
     if(inicio == final):
         print("Você já chegou na sua meta.\nJá pode dobrá-la! ")
-    buscar()
+    else:
+        buscar()
     return 0
 
 # Estutura de Dados de uma Célula na Matriz
@@ -179,7 +180,7 @@ mapa = []
 mapa = criaMapa()       # Cria matriz com o mapa passado em .txt
 
 inicio = (0, 0)      # Coordenada inicio definido pelo professor
-final = (9, 0)       # Coordenada final definido pelo professor
+final = (9, 8)       # Coordenada final definido pelo professor
 
 dicPosicoesCalculadas = {}    # Dicionario de posições que tiveram seus pesos calculados
                                 #   {(coordenada) : ((coordenada),custo,heuristica,(posOrigem)), ...}
