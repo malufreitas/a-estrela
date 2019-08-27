@@ -8,11 +8,63 @@ listaAberta = []    # Lista com as coordenadas que não tiveram seus vizinhos ve
 listaFechada = []   # Lista com as coordenadas que tiveram seus vizinhos verificados
 
 def desenhar(lista_coordenadas):
-    #   TO DO:
-    #       Implementar a funcao que exporta um aquivo de imagem com o percurso ate o destino
-
     print(f"### PERCURSO de {inicio} ate {final} ###")
     print(lista_coordenadas)
+
+    delta = [[-1, 0],   # Para cima
+             [1, 0],    # Para baixo
+             [0, -1],   # Para esquerda
+             [0, 1]]    # Para direita
+
+    simbolo_cima = '^'
+    simbolo_baixo = 'v'
+    simbolo_esquerda = '<'
+    simbolo_direita = '>'
+
+    simbolo_obstaculo = '■'  # 1 no mapa
+    simbolo_inicio = '+'
+    simbolo_final = '*'
+
+    resultado = []
+
+    for i in mapa:
+        resultado.append(i)
+
+    atual = inicio
+
+    for pos in range(len(lista_coordenadas)):  # 0 1 2 ... 17
+        if (lista_coordenadas[pos] != inicio) and (lista_coordenadas[pos] != final):
+            if lista_coordenadas[pos][0] < atual[0]: # TROCAR PARA atual[0]  # Para cima
+                x = lista_coordenadas[pos][0]
+                y = lista_coordenadas[pos][1]
+                resultado[x][y] = simbolo_cima  
+            elif lista_coordenadas[pos][0] > atual[0]: # Para baixo
+                x = lista_coordenadas[pos][0]
+                y = lista_coordenadas[pos][1]
+                resultado[x][y] = simbolo_baixo
+            elif lista_coordenadas[pos][1] < atual[1]: # Para esquerda
+                x = lista_coordenadas[pos][0]
+                y = lista_coordenadas[pos][1]
+                resultado[x][y] = simbolo_esquerda
+            elif lista_coordenadas[pos][1] > atual[1]: # Para direita
+                x = lista_coordenadas[pos][0]
+                y = lista_coordenadas[pos][1]
+                resultado[x][y] = simbolo_direita
+            
+            atual = lista_coordenadas[pos]
+    
+    resultado[inicio[0]][inicio[1]] = '+'
+    resultado[final[0]][final[1]] = '*'
+
+    for x in range(len(resultado)):
+        for y in range(len(resultado)):
+            if resultado[x][y] == 1:
+                resultado[x][y] = simbolo_obstaculo
+            elif resultado[x][y] == 0:
+                resultado[x][y] = ' '
+            
+    return resultado            
+            
 
 def recuperar_caminho(atual):
     global dicPosicoesCalculadas
@@ -32,6 +84,7 @@ def recuperar_caminho(atual):
     
     percurso.reverse()
     return percurso
+
 
 def encontra_vizinhos(atual):
     '''
@@ -91,9 +144,9 @@ def calcula_custos(pai, vizinhos):
     for vizinho in vizinhos:
         heuristica = distanciaManhattan(vizinho, final)
         try:
-            custo = dicPosicoesCalculadas[pai][1] + 1 # Custo = Custo do Pai + 1
+            custo = dicPosicoesCalculadas[pai][1] + 1  # Custo = Custo do Pai + 1
         except:
-            custo = 1 # No caso do Pai ser o Ponto Inicial
+            custo = 1  # No caso do Pai ser o Ponto Inicial
 
         dicPosicoesCalculadas[vizinho] = (vizinho, custo, heuristica, pai)
 
@@ -155,7 +208,10 @@ def buscar():
         if(final in listaFechada): # Achou o objetivo se o vizinho for coordenada final
             achou = True
             caminho = recuperar_caminho(atual) # Lista com as posicoes percorridas até o destino
-            desenhar(caminho)
+            print()
+            resultado = desenhar(caminho)
+            for i in resultado:
+                print(i)
 
         # Ordenação dos elementos em ordem de custo crescente
         ordena_pelo_custo() 
@@ -164,6 +220,9 @@ def buscar():
 
 
 def main():
+    for i in mapa:
+        print(i)
+
     if(inicio == final):
         print("Você já chegou na sua meta.\nJá pode dobrá-la! ")
     else:
