@@ -23,7 +23,6 @@ def recuperar_caminho(atual):
     else:
         pontoOrigem = inicio
 
-    percurso.append(final)
     percurso.append(atual)
     while pontoOrigem != inicio:
         percurso.append(pontoOrigem)
@@ -91,7 +90,10 @@ def calcula_custos(pai, vizinhos):
 
     for vizinho in vizinhos:
         heuristica = distanciaManhattan(vizinho, final)
-        custo = distanciaManhattan(vizinho, inicio)
+        try:
+            custo = dicPosicoesCalculadas[pai][1] + 1 # Custo = Custo do Pai + 1
+        except:
+            custo = 1 # No caso do Pai ser o Ponto Inicial
 
         dicPosicoesCalculadas[vizinho] = (vizinho, custo, heuristica, pai)
 
@@ -137,26 +139,26 @@ def buscar():
         vizinhos = encontra_vizinhos(atual)
         # print("Vizinhos >> ",vizinhos)
         
-        if(final in vizinhos): # Achou o objetivo se o vizinho for coordenada final
+        calcula_custos(atual, vizinhos)  # Calculo de custo de cada vizinho
+
+        for vizinho in vizinhos:# Verificando de um vizinho do atual ja nao esta presente na lista aberta
+            if (vizinho not in listaAberta):
+                listaAberta.append(vizinho)            
+        
+        # Remocao do primeiro elemento da lista aberta
+        listaAberta.remove(atual)
+        
+        # Adicionando o elemento processado na lista fechada
+        listaFechada.append(atual)  
+        # print("Lista fechada >> ",listaFechada)
+
+        if(final in listaFechada): # Achou o objetivo se o vizinho for coordenada final
             achou = True
             caminho = recuperar_caminho(atual) # Lista com as posicoes percorridas até o destino
             desenhar(caminho)
-        else:
-            calcula_custos(atual, vizinhos)  # Calculo de custo de cada vizinho
 
-            for vizinho in vizinhos:# Verificando de um vizinho do atual ja nao esta presente na lista aberta
-                if (vizinho not in listaAberta):
-                    listaAberta.append(vizinho)
-            
-            # Remocao do primeiro elemento da lista aberta
-            listaAberta.remove(atual)
-            
-            # Adicionando o elemento processado na lista fechada
-            listaFechada.append(atual)  
-            # print("Lista fechada >> ",listaFechada)
-
-            # Ordenação dos elementos em ordem de custo crescente
-            ordena_pelo_custo() 
+        # Ordenação dos elementos em ordem de custo crescente
+        ordena_pelo_custo() 
     
     return 0
 
