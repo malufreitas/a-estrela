@@ -11,10 +11,12 @@ def desenhar(lista_coordenadas):
     print(f"### PERCURSO de {inicio} ate {final} ###")
     print(lista_coordenadas)
 
+    '''
     delta = [[-1, 0],   # Para cima
              [1, 0],    # Para baixo
              [0, -1],   # Para esquerda
              [0, 1]]    # Para direita
+    '''
 
     simbolo_cima = '^'
     simbolo_baixo = 'v'
@@ -31,30 +33,32 @@ def desenhar(lista_coordenadas):
         resultado.append(i)
 
     atual = inicio
+    simbolo = ''
 
-    for pos in range(len(lista_coordenadas)):  # 0 1 2 ... 17
-        if (lista_coordenadas[pos] != inicio) and (lista_coordenadas[pos] != final):
-            if lista_coordenadas[pos][0] < atual[0]: # TROCAR PARA atual[0]  # Para cima
-                x = lista_coordenadas[pos][0]
-                y = lista_coordenadas[pos][1]
-                resultado[x][y] = simbolo_cima  
-            elif lista_coordenadas[pos][0] > atual[0]: # Para baixo
-                x = lista_coordenadas[pos][0]
-                y = lista_coordenadas[pos][1]
-                resultado[x][y] = simbolo_baixo
-            elif lista_coordenadas[pos][1] < atual[1]: # Para esquerda
-                x = lista_coordenadas[pos][0]
-                y = lista_coordenadas[pos][1]
-                resultado[x][y] = simbolo_esquerda
-            elif lista_coordenadas[pos][1] > atual[1]: # Para direita
-                x = lista_coordenadas[pos][0]
-                y = lista_coordenadas[pos][1]
-                resultado[x][y] = simbolo_direita
+    for pos in range(1, len(lista_coordenadas)):  # 0 1 2 ... 17        
+        #print('%s ? %s' % (atual, lista_coordenadas[pos]))
+        
+        if (lista_coordenadas[pos] != inicio):
+            if atual[0] > lista_coordenadas[pos][0]:    # Para cima
+                simbolo = simbolo_cima  
+            elif atual[0] < lista_coordenadas[pos][0]:  # Para baixo
+                simbolo = simbolo_baixo
+            elif atual[1] > lista_coordenadas[pos][1]:  # Para esquerda
+                simbolo = simbolo_esquerda
+            elif atual[1] < lista_coordenadas[pos][1]:  # Para direita
+                simbolo = simbolo_direita
             
+            if lista_coordenadas[pos] == final:
+                x = lista_coordenadas[pos-1][0]
+                y = lista_coordenadas[pos-1][1]
+            else:
+                x = lista_coordenadas[pos][0]
+                y = lista_coordenadas[pos][1]
+            resultado[x][y] = simbolo
             atual = lista_coordenadas[pos]
     
-    resultado[inicio[0]][inicio[1]] = '+'
-    resultado[final[0]][final[1]] = '*'
+    resultado[inicio[0]][inicio[1]] = simbolo_inicio
+    resultado[final[0]][final[1]] = simbolo_final
 
     for x in range(len(resultado)):
         for y in range(len(resultado)):
@@ -208,8 +212,12 @@ def buscar():
         if(final in listaFechada): # Achou o objetivo se o vizinho for coordenada final
             achou = True
             caminho = recuperar_caminho(atual) # Lista com as posicoes percorridas até o destino
+            
             print()
+            
             resultado = desenhar(caminho)
+            
+            print()
             for i in resultado:
                 print(i)
 
@@ -242,6 +250,9 @@ mapa = criaMapa()       # Cria matriz com o mapa passado em .txt
 
 inicio = (0, 0)      # Coordenada inicio definido pelo professor
 final = (9, 8)       # Coordenada final definido pelo professor
+
+#inicio = (8,8)  # Testando outros valores
+#final= (2,1)    # Testando outros valores
 
 dicPosicoesCalculadas = {}    # Dicionario de posições que tiveram seus pesos calculados
                                 #   {(coordenada) : ((coordenada),custo,heuristica,(posOrigem)), ...}
