@@ -53,7 +53,7 @@ Para a implementação deste algoritmo as funções g(x) e h(x) citadas na compo
 A *heurística de Manhattan* tem esse nome pois define a menor distânia entre quarteirões numa malha urbana reticulada ortogonal, como na pópria zona da Cidade de Manhattan.
 
 <p align="center">
-  <img src="">
+  <img src="https://github.com/malufreitas/a-estrela/blob/master/Imagens/manhattan_distance.png">
 </p>
 
 **Definições das Variáveis:**
