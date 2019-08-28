@@ -28,6 +28,28 @@ O problema proposto para o trabalho tem como objetivo geral encontrar um caminho
 - Impressão interativa do caminho realizado pelo objeto do ponto inicial ao ponto final. 
  
 
+## Instalação e Execução
+
+**IMPORTANTE**
+
+A construção do programa utilizou a versão 3 do [Python](https://www.python.org/), então recomendamos o uso dessa mesma versão para execução do arquivo main.py. Segue link da documentação da linguagem para as instalações da versão 3:
+- https://docs.python.org/3/using/index.html
+
+Continuando...
+
+- Faça um clone do projeto ou faça o download dos arquivos
+- Por meio da linha de comando caminhe até o diretório onde se encontram os arquivos-fonte
+- Execute o comando *python main.py nomedoarquivo.txt*
+- Insira as coordenadas do ponto de origem no formato *linha coluna*. (Separados por espaço)
+- Insira as coordenadas do ponto de destino no formato *linha coluna*. (Separados por espaço)
+
+Segue abaixo um PrintScreen de exemplo da execução:
+
+<p align="center">
+  <img src="https://github.com/malufreitas/a-estrela/blob/master/Imagens/Exemplo%20de%20execu%C3%A7%C3%A3o.PNG">
+</p>
+
+
 ## Implementação
 
 O algoritmo foi implementado utilizando a linguagem [Python](https://www.python.org/)(versão 3), devido a familiaridade da equipe com a sintaxe e por entender que essa provê os recursos necessários para a codificação. A implementação sugerida seguiu recomendações de duas referências (citadas abaixo).
@@ -50,7 +72,7 @@ Para a implementação deste algoritmo as funções g(x) e h(x) citadas na compo
 - g(x): Representa a função de custo e será usada como constante 1.
 - h(x): Representa a heurística, na qual utilizamos a função heurística de Manhattan.
 
-A *heurística de Manhattan* tem esse nome pois define a menor distânia entre quarteirões numa malha urbana reticulada ortogonal, como na pópria zona da Cidade de Manhattan.
+A *heurística de Manhattan* tem esse nome pois define a menor distânia entre quarteirões numa malha urbana reticulada ortogonal, como na própria zona da Cidade de Manhattan, EUA.
 
 <p align="center">
   <img width="350" height="350" src="https://github.com/malufreitas/a-estrela/blob/master/Imagens/manhattan_distance.png">
