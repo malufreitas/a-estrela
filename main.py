@@ -10,6 +10,7 @@ listaFechada = []   # Lista com as coordenadas que tiveram seus vizinhos verific
 def desenhar(lista_coordenadas):
     print(f"### PERCURSO de {inicio} ate {final} ###")
     print(lista_coordenadas)
+    print()
 
     '''
     delta = [[-1, 0],   # Para cima
@@ -24,8 +25,8 @@ def desenhar(lista_coordenadas):
     simbolo_direita = '>'
 
     simbolo_obstaculo = '■'  # 1 no mapa
-    simbolo_inicio = '+'
-    simbolo_final = '*'
+    simbolo_inicio = 'A'
+    simbolo_final = 'B'
 
     resultado = []
 
@@ -48,7 +49,7 @@ def desenhar(lista_coordenadas):
             elif atual[1] < lista_coordenadas[pos][1]:  # Para direita
                 simbolo = simbolo_direita
             
-            if lista_coordenadas[pos] == final:
+            if lista_coordenadas[pos] == final:     # Verifica se o próximo passo é a chegada
                 x = lista_coordenadas[pos-1][0]
                 y = lista_coordenadas[pos-1][1]
             else:
@@ -65,7 +66,7 @@ def desenhar(lista_coordenadas):
             if resultado[x][y] == 1:
                 resultado[x][y] = simbolo_obstaculo
             elif resultado[x][y] == 0:
-                resultado[x][y] = ' '
+                resultado[x][y] = '-'
             
     return resultado            
             
@@ -128,6 +129,7 @@ def encontra_vizinhos(atual):
 
     return vizinhos
 
+
 def ordena_pelo_custo():
     global listaAberta
     listaAberta_aux = []
@@ -142,6 +144,7 @@ def ordena_pelo_custo():
     for elemento in listaAberta_aux:
         listaAberta.append(elemento[0])
 
+
 def calcula_custos(pai, vizinhos):
     global dicPosicoesCalculadas
 
@@ -155,6 +158,7 @@ def calcula_custos(pai, vizinhos):
         dicPosicoesCalculadas[vizinho] = (vizinho, custo, heuristica, pai)
 
     return dicPosicoesCalculadas
+
 
 def criaMapa():
     matriz = []
@@ -173,7 +177,6 @@ def criaMapa():
         for j in range(len(matriz[i])):
             elemento = matriz[i][j]
             matriz[i][j] = int(elemento)
-    
 
     return matriz
 
@@ -185,20 +188,17 @@ def buscar():
     listaAberta.append(inicio)
     achou = False
 
-    while listaAberta != [] and not achou:
-        # print("Lista aberta >> ",listaAberta)
-        
+    while listaAberta != [] and not achou:        
         # Primeiro elemento da lista já ordenada
         atual = listaAberta[0]
-        # print("Atual >> ",atual)
 
         # Pesquisa pelos elementos vizinhos elegiveis (nao é barreira) e não presentes na lista fechada
         vizinhos = encontra_vizinhos(atual)
-        # print("Vizinhos >> ",vizinhos)
         
         calcula_custos(atual, vizinhos)  # Calculo de custo de cada vizinho
 
-        for vizinho in vizinhos:# Verificando de um vizinho do atual ja nao esta presente na lista aberta
+        # Verificando de um vizinho do atual ja nao esta presente na lista aberta
+        for vizinho in vizinhos:
             if (vizinho not in listaAberta):
                 listaAberta.append(vizinho)            
         
@@ -207,34 +207,34 @@ def buscar():
         
         # Adicionando o elemento processado na lista fechada
         listaFechada.append(atual)  
-        # print("Lista fechada >> ",listaFechada)
 
         if(final in listaFechada): # Achou o objetivo se o vizinho for coordenada final
             achou = True
             caminho = recuperar_caminho(atual) # Lista com as posicoes percorridas até o destino
-            
-            print()
-            
+                        
             resultado = desenhar(caminho)
-            
-            print()
-            for i in resultado:
-                print(i)
 
         # Ordenação dos elementos em ordem de custo crescente
         ordena_pelo_custo() 
     
-    return 0
+    return resultado
 
 
 def main():
-    for i in mapa:
-        print(i)
+    #for i in mapa:
+    #    print(i)
 
     if(inicio == final):
         print("Você já chegou na sua meta.\nJá pode dobrá-la! ")
     else:
-        buscar()
+        resultado = buscar()
+
+        for i in resultado:
+            for j in i:
+                print(j, end=" ")
+            print()
+        print()
+
     return 0
 
 # Estutura de Dados de uma Célula na Matriz
