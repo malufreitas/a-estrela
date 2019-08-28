@@ -30,7 +30,7 @@ O problema proposto para o trabalho tem como objetivo geral encontrar um caminho
 
 ## Implementação
 
-O algoritmo foi implementado utilizando a linguagem [Python](https://www.python.org/), devido a familiaridade da equipe com a sintaxe e por entender que essa provê os recursos necessários para a codificação. A implementação sugerida seguiu recomendações de duas referências (citadas abaixo).
+O algoritmo foi implementado utilizando a linguagem [Python](https://www.python.org/)(versão 3), devido a familiaridade da equipe com a sintaxe e por entender que essa provê os recursos necessários para a codificação. A implementação sugerida seguiu recomendações de duas referências (citadas abaixo).
 
 O processmento se inicia com a leitura e incorporação do [arquivo de texto](https://github.com/malufreitas/a-estrela/blob/master/mapa.txt) definido para o problema e materializado em uma matriz, utilizando o conceito de lista de lista da linguagem.
 
@@ -85,11 +85,17 @@ A *heurística de Manhattan* tem esse nome pois define a menor distânia entre q
 
 ## Resultados
 
-Exemplificação da execução do programa
+A imagem abaixo exemplifica a saída para determinado um cenário de testes para o arquivo de texto citado acima.
+
 <p align="center">
   <img src="https://github.com/malufreitas/a-estrela/blob/master/Imagens/Exemplo%20de%20execu%C3%A7%C3%A3o.PNG">
 </p>
 
+É mostrado uma saída construída pelo algoritmo, que pode ser interpretada da seguinte maneira:
+- A primeira linha define os pontos de origem e destino, com isso tem-se traçado o objetivo
+- A segunda linha mostra quais foram as coordenadas percorridas até chegar ao destino, sendo essa uma lista de coordenadas
+- Por último, é projetada como seria a representação de todos os elementos importantes: origem,destino,barreiras,percurso
+> Pela visualização da imagem são descritos os pontos Inicial(A) e Final(B), os quadrados brancos representam as barreiras encontradas no mapa e as setas definem o caminho percorrido pelo objeto até o destino final.
 
 ### Referências
 
