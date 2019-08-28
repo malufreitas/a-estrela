@@ -17,7 +17,7 @@ f(x) = g(x) + h(x), onde:
 ## Problema Proposto
 
 <p align="center">
-  <img src="https://github.com/malufreitas/a-estrela/blob/master/Imagens/Exemplo%20A_star.png">
+  <img width="350" height="350" src="https://github.com/malufreitas/a-estrela/blob/master/Imagens/Exemplo%20A_star.png">
 </p>
 
 O problema proposto para o trabalho tem como objetivo geral encontrar um caminho de um ponto A até um ponto B, utilizando uma implementação do Algoritmo **A Estrela**, usando a definição de heurística para traçar o melhor caminho. Como parte também dos objetivos específicos, espera-se que sejam definidos:
@@ -53,7 +53,7 @@ Para a implementação deste algoritmo as funções g(x) e h(x) citadas na compo
 A *heurística de Manhattan* tem esse nome pois define a menor distânia entre quarteirões numa malha urbana reticulada ortogonal, como na pópria zona da Cidade de Manhattan.
 
 <p align="center">
-  <img src="https://github.com/malufreitas/a-estrela/blob/master/Imagens/manhattan_distance.png">
+  <img width="350" height="350" src="https://github.com/malufreitas/a-estrela/blob/master/Imagens/manhattan_distance.png">
 </p>
 
 **Definições das Variáveis:**
@@ -68,13 +68,13 @@ A *heurística de Manhattan* tem esse nome pois define a menor distânia entre q
 **Identificação dos Elementos Elegíveis a vizinhos, citado no Tópico 3**
 
 <p align="center">
-  <img src="https://github.com/malufreitas/a-estrela/blob/master/Imagens/Encontra%20vizinhos.PNG">
+  <img  src="https://github.com/malufreitas/a-estrela/blob/master/Imagens/Encontra%20vizinhos.PNG">
 </p>
 
 **Cálculo de custo, citado no Tópico 5**
 
 <p align="center">
-  <img src="https://github.com/malufreitas/a-estrela/blob/master/Imagens/Calculo%20de%20custo.PNG">
+  <img  src="https://github.com/malufreitas/a-estrela/blob/master/Imagens/Calculo%20de%20custo.PNG">
 </p>
 
 **Função da Heurística de Manhattan, citado no Tópico 5**
