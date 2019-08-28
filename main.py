@@ -2,7 +2,8 @@
 
 # Codigo desenvolvido por Maria Luiza e Tarcisio Bruni
 
-import time
+# import time
+import sys
 
 listaAberta = []    # Lista com as coordenadas que não tiveram seus vizinhos verificados
 listaFechada = []   # Lista com as coordenadas que tiveram seus vizinhos verificados
@@ -163,7 +164,7 @@ def calcula_custos(pai, vizinhos):
 def criaMapa():
     matriz = []
 
-    arquivo = open('mapa.txt', 'r')
+    arquivo = open(str(sys.argv[1]), 'r')
     linha = arquivo.readline().strip().split()
 
     while (linha != []):
@@ -220,9 +221,31 @@ def buscar():
     return resultado
 
 
+def entrada_de_dados():
+    global inicio
+    global final
+
+    print("Exemplo de entrada (x,y): = '0 0'\n")
+    for i in range(2):
+        if i == 0:
+            mensagem = 'inicial'
+        else:
+            mensagem = 'final'
+
+        entrada = input("Entre com o ponto %s do trajeto: " % mensagem)
+        argumentos = tuple(entrada.split())
+        linha = int(argumentos[0])
+        coluna = int(argumentos[1])
+        if i == 0:
+            inicio = (linha, coluna)
+        if i == 1:
+            final = (linha, coluna)
+
+    print()
+
+
 def main():
-    #for i in mapa:
-    #    print(i)
+    entrada_de_dados()
 
     if(inicio == final):
         print("Você já chegou na sua meta.\nJá pode dobrá-la! ")
@@ -248,8 +271,8 @@ def main():
 mapa = []
 mapa = criaMapa()       # Cria matriz com o mapa passado em .txt
 
-inicio = (0, 0)      # Coordenada inicio definido pelo professor
-final = (9, 8)       # Coordenada final definido pelo professor
+inicio = ()  # Coordenada inicio definido pelo professor
+final = ()   # Coordenada final definido pelo professor
 
 #inicio = (8,8)  # Testando outros valores
 #final= (2,1)    # Testando outros valores
