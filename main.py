@@ -26,6 +26,7 @@ def desenhar(lista_coordenadas):
     simbolo_direita = '>'
 
     simbolo_obstaculo = '■'  # 1 no mapa
+    simbolo_livre = '-'      # 0 no mapa
     simbolo_inicio = 'A'
     simbolo_final = 'B'
 
@@ -62,12 +63,16 @@ def desenhar(lista_coordenadas):
     resultado[inicio[0]][inicio[1]] = simbolo_inicio
     resultado[final[0]][final[1]] = simbolo_final
 
+    print(resultado)
     for x in range(len(resultado)):
-        for y in range(len(resultado)):
+        for y in range(len(resultado[x])):
             if resultado[x][y] == 1:
                 resultado[x][y] = simbolo_obstaculo
             elif resultado[x][y] == 0:
-                resultado[x][y] = '-'
+                resultado[x][y] = simbolo_livre
+    
+    print()
+    print(resultado)
             
     return resultado            
             
@@ -226,7 +231,10 @@ def entrada_de_dados():
     global final
 
     print("Exemplo de entrada (x,y): = '0 0'\n")
-    for i in range(2):
+
+    # Loop para pegar 2 valores (x,y)
+    i = 0
+    while  i < 2:
         if i == 0:
             mensagem = 'inicial'
         else:
@@ -236,12 +244,18 @@ def entrada_de_dados():
         argumentos = tuple(entrada.split())
         linha = int(argumentos[0])
         coluna = int(argumentos[1])
-        if i == 0:
-            inicio = (linha, coluna)
-        if i == 1:
-            final = (linha, coluna)
 
-    print()
+        # Verifica se o ponto escolhido como inicio ou final é um obstaculo
+        if mapa[linha][coluna] == 1:
+            print('\nVocê escolheu um obstaculo como ponto %s, escolha novamente\n' % mensagem)
+            i -= 1
+        else:
+            if i == 0:
+                inicio = (linha, coluna)
+            if i == 1:
+                final = (linha, coluna)
+
+        i += 1
 
 
 def main():
